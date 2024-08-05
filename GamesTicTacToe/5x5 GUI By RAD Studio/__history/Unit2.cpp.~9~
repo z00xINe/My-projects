@@ -1,0 +1,274 @@
+//---------------------------------------------------------------------------
+
+#include <fmx.h>
+#pragma hdrstop
+
+#include "Unit2.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.fmx"
+TForm2 *Form2;
+int turn = 1;
+//---------------------------------------------------------------------------
+void TForm2::is_winner()
+{
+    int wins_x = 0, wins_o = 0;
+
+    // Check Rows, Columns, and Diagonals for 'X' or 'O'
+    for (int i = 0; i < 5; ++i)
+    {
+        // Rows
+        if ((Button1->Text == 'X' || Button1->Text == 'O') &&
+            Button1->Text == (Button2 + i * 5)->Text &&
+            Button1->Text == (Button2 + i * 5 + 1)->Text &&
+            Button1->Text == (Button2 + i * 5 + 2)->Text &&
+            Button1->Text == (Button2 + i * 5 + 3)->Text &&
+            Button1->Text == (Button2 + i * 5 + 4)->Text)
+        {
+            if (Button1->Text == 'X')
+                wins_x++;
+            else
+                wins_o++;
+        }
+
+        // Columns
+        if ((Button1->Text == 'X' || Button1->Text == 'O') &&
+            Button1->Text == (Button2 + i)->Text &&
+            Button1->Text == (Button2 + i + 5)->Text &&
+            Button1->Text == (Button2 + i + 10)->Text &&
+            Button1->Text == (Button2 + i + 15)->Text &&
+            Button1->Text == (Button2 + i + 20)->Text)
+        {
+            if (Button1->Text == 'X')
+                wins_x++;
+            else
+                wins_o++;
+        }
+    }
+
+    // Diagonals
+    if ((Button1->Text == 'X' || Button1->Text == 'O') &&
+        Button1->Text == (Button2 + 6)->Text &&
+        Button1->Text == (Button2 + 12)->Text &&
+        Button1->Text == (Button2 + 18)->Text &&
+        Button1->Text == (Button2 + 24)->Text)
+    {
+        if (Button1->Text == 'X')
+            wins_x++;
+        else
+            wins_o++;
+    }
+
+    if ((Button5->Text == 'X' || Button5->Text == 'O') &&
+        Button5->Text == (Button2 + 4)->Text &&
+        Button5->Text == (Button2 + 8)->Text &&
+        Button5->Text == (Button2 + 12)->Text &&
+        Button5->Text == (Button2 + 16)->Text)
+    {
+        if (Button5->Text == 'X')
+            wins_x++;
+        else
+            wins_o++;
+    }
+
+    AnsiString tmp = wins_x + " : " + wins_o;
+    winnerLabel->Text = tmp;
+}
+
+//void TForm2::is_winner()
+//{
+//	int wins_x = 0, wins_o = 0;
+//
+//	// Row Check for 'X'
+//	if(Button1->Text='X' && Button1->Text == Button2->Text && Button1->Text == Button3->Text)
+//		wins_x++;
+//	if(Button2->Text='X' && Button2->Text == Button3->Text && Button2->Text == Button4->Text)
+//		wins_x++;
+//	if(Button3->Text='X' && Button3->Text == Button4->Text && Button3->Text == Button5->Text)
+//		wins_x++;
+//	if(Button6->Text='X' && Button6->Text == Button7->Text && Button6->Text == Button8->Text)
+//		wins_x++;
+//	if(Button7->Text='X' && Button7->Text == Button8->Text && Button7->Text == Button9->Text)
+//		wins_x++;
+//	if(Button8->Text='X' && Button8->Text == Button9->Text && Button8->Text == Button10->Text)
+//		wins_x++;
+//	if(Button11->Text='X' && Button11->Text == Button12->Text && Button11->Text == Button13->Text)
+//		wins_x++;
+//	if(Button12->Text='X' && Button12->Text == Button13->Text && Button12->Text == Button14->Text)
+//		wins_x++;
+//	if(Button13->Text='X' && Button13->Text == Button14->Text && Button13->Text == Button15->Text)
+//		wins_x++;
+//	if(Button16->Text='X' && Button16->Text == Button17->Text && Button16->Text == Button18->Text)
+//		wins_x++;
+//	if(Button17->Text='X' && Button17->Text == Button18->Text && Button17->Text == Button19->Text)
+//		wins_x++;
+//	if(Button18->Text='X' && Button18->Text == Button19->Text && Button18->Text == Button20->Text)
+//		wins_x++;
+//	if(Button21->Text='X' && Button21->Text == Button22->Text && Button21->Text == Button23->Text)
+//		wins_x++;
+//	if(Button22->Text='X' && Button22->Text == Button23->Text && Button22->Text == Button24->Text)
+//		wins_x++;
+//	if(Button23->Text='X' && Button23->Text == Button24->Text && Button23->Text == Button25->Text)
+//		wins_x++;
+//
+//	// Col Check for 'X'
+//	if(Button1->Text='X' && Button1->Text == Button6->Text && Button1->Text == Button11->Text)
+//		wins_x++;
+//	if(Button6->Text='X' && Button6->Text == Button11->Text && Button6->Text == Button16->Text)
+//		wins_x++;
+//	if(Button11->Text='X' && Button11->Text == Button16->Text && Button11->Text == Button21->Text)
+//		wins_x++;
+//	if(Button2->Text='X' && Button2->Text == Button7->Text && Button2->Text == Button12->Text)
+//		wins_x++;
+//	if(Button7->Text='X' && Button7->Text == Button12->Text && Button7->Text == Button17->Text)
+//		wins_x++;
+//	if(Button12->Text='X' && Button12->Text == Button17->Text && Button12->Text == Button21->Text)
+//		wins_x++;
+//	if(Button3->Text='X' && Button3->Text == Button8->Text && Button3->Text == Button13->Text)
+//		wins_x++;
+//	if(Button8->Text='X' && Button8->Text == Button13->Text && Button8->Text == Button18->Text)
+//		wins_x++;
+//	if(Button13->Text='X' && Button13->Text == Button18->Text && Button13->Text == Button23->Text)
+//		wins_x++;
+//	if(Button4->Text='X' && Button4->Text == Button9->Text && Button4->Text == Button14->Text)
+//		wins_x++;
+//	if(Button9->Text='X' && Button9->Text == Button14->Text && Button9->Text == Button19->Text)
+//		wins_x++;
+//	if(Button14->Text='X' && Button14->Text == Button19->Text && Button14->Text == Button24->Text)
+//		wins_x++;
+//	if(Button5->Text='X' && Button5->Text == Button10->Text && Button5->Text == Button15->Text)
+//		wins_x++;
+//	if(Button10->Text='X' && Button10->Text == Button15->Text && Button10->Text == Button20->Text)
+//		wins_x++;
+//	if(Button15->Text='X' && Button15->Text == Button20->Text && Button15->Text == Button25->Text)
+//		wins_x++;
+//
+//	// Diagonal Check for 'X'
+//	if (Button1->Text == 'X' && Button1->Text == Button7->Text && Button1->Text == Button13->Text && Button1->Text == Button19->Text)
+//		wins_x++;
+//	if (Button2->Text == 'X' && Button2->Text == Button8->Text && Button2->Text == Button14->Text && Button2->Text == Button20->Text)
+//		wins_x++;
+//	if (Button3->Text == 'X' && Button3->Text == Button9->Text && Button3->Text == Button15->Text && Button3->Text == Button21->Text)
+//		wins_x++;
+//	if (Button4->Text == 'X' && Button4->Text == Button10->Text && Button4->Text == Button16->Text && Button4->Text == Button22->Text)
+//		wins_x++;
+//	if (Button5->Text == 'X' && Button5->Text == Button11->Text && Button5->Text == Button17->Text && Button5->Text == Button23->Text)
+//		wins_x++;
+//	if (Button6->Text == 'X' && Button6->Text == Button12->Text && Button6->Text == Button18->Text && Button6->Text == Button24->Text)
+//		wins_x++;
+//	if (Button11->Text == 'X' && Button11->Text == Button15->Text && Button11->Text == Button19->Text && Button11->Text == Button23->Text)
+//		wins_x++;
+//	if (Button5->Text == 'X' && Button5->Text == Button9->Text && Button5->Text == Button13->Text && Button5->Text == Button17->Text)
+//		wins_x++;
+//
+//	// Row Check for 'O'
+//	if(Button1->Text='O' && Button1->Text == Button2->Text && Button1->Text == Button3->Text)
+//		wins_o++;
+//	if(Button2->Text='O' && Button2->Text == Button3->Text && Button2->Text == Button4->Text)
+//		wins_o++;
+//	if(Button3->Text='O' && Button3->Text == Button4->Text && Button3->Text == Button5->Text)
+//		wins_o++;
+//	if(Button6->Text='O' && Button6->Text == Button7->Text && Button6->Text == Button8->Text)
+//		wins_o++;
+//	if(Button7->Text='O' && Button7->Text == Button8->Text && Button7->Text == Button9->Text)
+//		wins_o++;
+//	if(Button8->Text='O' && Button8->Text == Button9->Text && Button8->Text == Button10->Text)
+//		wins_o++;
+//	if(Button11->Text='O' && Button11->Text == Button12->Text && Button11->Text == Button13->Text)
+//		wins_o++;
+//	if(Button12->Text='O' && Button12->Text == Button13->Text && Button12->Text == Button14->Text)
+//		wins_o++;
+//	if(Button13->Text='O' && Button13->Text == Button14->Text && Button13->Text == Button15->Text)
+//		wins_o++;
+//	if(Button16->Text='O' && Button16->Text == Button17->Text && Button16->Text == Button18->Text)
+//		wins_o++;
+//	if(Button17->Text='O' && Button17->Text == Button18->Text && Button17->Text == Button19->Text)
+//		wins_o++;
+//	if(Button18->Text='O' && Button18->Text == Button19->Text && Button18->Text == Button20->Text)
+//		wins_o++;
+//	if(Button21->Text='O' && Button21->Text == Button22->Text && Button21->Text == Button23->Text)
+//		wins_o++;
+//	if(Button22->Text='O' && Button22->Text == Button23->Text && Button22->Text == Button24->Text)
+//		wins_o++;
+//	if(Button23->Text='O' && Button23->Text == Button24->Text && Button23->Text == Button25->Text)
+//		wins_o++;
+//
+//	// Col Check for 'O'
+//	if(Button1->Text='O'&& Button1->Text == Button6->Text && Button1->Text == Button11->Text)
+//		wins_o++;
+//	if(Button6->Text='O'&& Button6->Text == Button11->Text && Button6->Text == Button16->Text)
+//		wins_o++;
+//	if(Button11->Text='O'&& Button11->Text == Button16->Text && Button11->Text == Button21->Text)
+//		wins_o++;
+//	if(Button2->Text='O' && Button2->Text == Button7->Text && Button2->Text == Button12->Text)
+//		wins_o++;
+//	if(Button7->Text='O' && Button7->Text == Button12->Text && Button7->Text == Button17->Text)
+//		wins_o++;
+//	if(Button12->Text='O' && Button12->Text == Button17->Text && Button12->Text == Button21->Text)
+//		wins_o++;
+//	if(Button3->Text='O' && Button3->Text == Button8->Text && Button3->Text == Button13->Text)
+//		wins_o++;
+//	if(Button8->Text='O' && Button8->Text == Button13->Text && Button8->Text == Button18->Text)
+//		wins_o++;
+//	if(Button13->Text='O' && Button13->Text == Button18->Text && Button13->Text == Button23->Text)
+//		wins_o++;
+//	if(Button4->Text='O' && Button4->Text == Button9->Text && Button4->Text == Button14->Text)
+//		wins_o++;
+//	if(Button9->Text='O' && Button9->Text == Button14->Text && Button9->Text == Button19->Text)
+//		wins_o++;
+//	if(Button14->Text='O' && Button14->Text == Button19->Text && Button14->Text == Button24->Text)
+//		wins_o++;
+//	if(Button5->Text='O' && Button5->Text == Button10->Text && Button5->Text == Button15->Text)
+//		wins_o++;
+//	if(Button10->Text='O' && Button10->Text == Button15->Text && Button10->Text == Button20->Text)
+//		wins_o++;
+//	if(Button15->Text='O' && Button15->Text == Button20->Text && Button15->Text == Button25->Text)
+//		wins_o++;
+//
+//	// Diagonal Check for 'O'
+//	if (Button1->Text == 'O' && Button1->Text == Button7->Text && Button1->Text == Button13->Text && Button1->Text == Button19->Text)
+//		wins_o++;
+//	if (Button2->Text == 'O' && Button2->Text == Button8->Text && Button2->Text == Button14->Text && Button2->Text == Button20->Text)
+//		wins_o++;
+//	if (Button3->Text == 'O' && Button3->Text == Button9->Text && Button3->Text == Button15->Text && Button3->Text == Button21->Text)
+//		wins_o++;
+//	if (Button4->Text == 'O' && Button4->Text == Button10->Text && Button4->Text == Button16->Text && Button4->Text == Button22->Text)
+//		wins_o++;
+//	if (Button5->Text == 'O' && Button5->Text == Button11->Text && Button5->Text == Button17->Text && Button5->Text == Button23->Text)
+//		wins_o++;
+//	if (Button6->Text == 'O' && Button6->Text == Button12->Text && Button6->Text == Button18->Text && Button6->Text == Button24->Text)
+//		wins_o++;
+//	if (Button11->Text == 'O' && Button11->Text == Button15->Text && Button11->Text == Button19->Text && Button11->Text == Button23->Text)
+//		wins_o++;
+//	if (Button5->Text == 'O' && Button5->Text == Button9->Text && Button5->Text == Button13->Text && Button5->Text == Button17->Text)
+//		wins_o++;
+
+//	AnsiString tmp = wins_x + " : " + wins_o;
+//	winnerLabel->Text = tmp;
+//}
+//---------------------------------------------------------------------------
+__fastcall TForm2::TForm2(TComponent* Owner):TForm(Owner)
+{
+	Symbol->Text='X';
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm2::ButtonClick(TObject *Sender)
+{
+	TButton* clickedButton = dynamic_cast<TButton*>(Sender);
+
+	if (turn % 2 != 0)
+	{
+		clickedButton->Text='X';
+		Symbol->Text='O';
+	}
+	else
+	{
+		clickedButton->Text='O';
+		Symbol->Text='X';
+	}
+	turn++;
+
+	if(turn >= 25)
+		is_winner();
+}
+//--------------------------------------------------------------------------
